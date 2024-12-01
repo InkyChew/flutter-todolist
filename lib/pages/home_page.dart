@@ -5,14 +5,14 @@ import 'package:todolist/models/task.dart';
 
 import '../components/todo_tile.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State <MyHomePage> createState() => MyHomePageState();
+  State <HomePage> createState() => HomePageState();
 }
 
-class MyHomePageState extends State <MyHomePage> {
+class HomePageState extends State <HomePage> {
 
   TodoDb db = TodoDb();
 

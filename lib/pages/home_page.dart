@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/components/color_dialog.dart';
 import 'package:todolist/components/create_dialog.dart';
 import 'package:todolist/data/todo_db.dart';
 import 'package:todolist/models/task.dart';
@@ -6,13 +7,28 @@ import 'package:todolist/models/task.dart';
 import '../components/todo_tile.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final Color themeColor;
+  final Function(Color) changeTheme;
+
+  const HomePage({super.key, required this.themeColor, required this.changeTheme});
 
   @override
   State <HomePage> createState() => HomePageState();
 }
 
 class HomePageState extends State <HomePage> {
+
+  void showColorDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return ColorDialog(
+          currentColor: widget.themeColor,
+          changeColor: widget.changeTheme
+        );
+      }
+    );
+  }
 
   TodoDb db = TodoDb();
 
@@ -61,10 +77,17 @@ class HomePageState extends State <HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         title: const Text("Ｔ　Ｏ　Ｄ　Ｏ"),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        actions: [
+          IconButton(
+            onPressed: showColorDialog,
+            icon: const Icon(Icons.color_lens)
+          )
+        ],
       ),
       body: ListView.builder(
         itemCount: db.todoList.length,

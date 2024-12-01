@@ -20,8 +20,8 @@ class TodoTile extends StatelessWidget {
           children: [
             SlidableAction(
               onPressed: onDelete,
-              backgroundColor: Theme.of(context).colorScheme.error,
               foregroundColor: Colors.white,
+              backgroundColor: Theme.of(context).colorScheme.error,
               icon: Icons.delete,
               label: 'Delete',
             ),
@@ -42,7 +42,10 @@ class TodoTile extends StatelessWidget {
               ),
               Text(
                 task.name,
-                style: TextStyle(decoration: task.completed ? TextDecoration.lineThrough : TextDecoration.none)
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  decoration: task.completed ? TextDecoration.lineThrough : TextDecoration.none
+                )
               ),
             ]
           ),

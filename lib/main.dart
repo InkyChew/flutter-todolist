@@ -12,8 +12,23 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Color themeColor = Colors.deepPurple;
+
+  void changeTheme(Color color) {
+    setState(() {
+      themeColor = color;
+    });
+    Navigator.of(context).pop();
+  }
 
   // This widget is the root of your application.
   @override
@@ -21,10 +36,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Todolist',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: themeColor),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: HomePage(
+        themeColor: themeColor,
+        changeTheme: changeTheme
+      ),
     );
   }
 }

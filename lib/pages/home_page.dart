@@ -68,6 +68,16 @@ class HomePageState extends State <HomePage> {
     db.updateList();
   }
 
+  void reorderList(int oldIndex, int newIndex) {
+    setState(() {
+      // update newIndex when drag up
+      if(oldIndex < newIndex) newIndex--;
+      var tile = db.todoList.removeAt(oldIndex);
+      db.todoList.insert(newIndex, tile);
+    });
+    db.updateList();
+  }
+
   @override
   void initState() {
     db.getList();
@@ -89,15 +99,18 @@ class HomePageState extends State <HomePage> {
           )
         ],
       ),
-      body: ListView.builder(
+      body: ReorderableListView.builder(        
+        padding: const EdgeInsets.only(left: 20, top: 10, right: 20),
         itemCount: db.todoList.length,
         itemBuilder: (context, index) {
           return TodoTile(
+            key: ValueKey(db.todoList[index]),
             task: db.todoList[index],
             onChange: (value) => completedChanged(value, index),
             onDelete: (context) => deleteTask(db.todoList[index]),
           );
         },
+        onReorder: (int oldIndex, int newIndex) => reorderList(oldIndex, newIndex),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: showCreateDialog,

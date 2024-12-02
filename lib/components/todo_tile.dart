@@ -12,43 +12,41 @@ class TodoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
-      child: Slidable(
-        endActionPane: ActionPane(
-          motion: const ScrollMotion(),
+    return Slidable(
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          SlidableAction(
+            onPressed: onDelete,
+            foregroundColor: Colors.white,
+            backgroundColor: Theme.of(context).colorScheme.error,
+            icon: Icons.delete,
+            label: 'Delete',
+          ),
+        ]
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.inversePrimary,
+          borderRadius: BorderRadius.circular(12)
+        ),
+        padding: const EdgeInsets.all(8),
+        margin: const EdgeInsets.only(top: 10, bottom: 10),
+        child: Row(
           children: [
-            SlidableAction(
-              onPressed: onDelete,
-              foregroundColor: Colors.white,
-              backgroundColor: Theme.of(context).colorScheme.error,
-              icon: Icons.delete,
-              label: 'Delete',
+            Checkbox(
+              value: task.completed,
+              onChanged: onChange,
+              activeColor: Theme.of(context).colorScheme.inverseSurface
+            ),
+            Text(
+              task.name,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                decoration: task.completed ? TextDecoration.lineThrough : TextDecoration.none
+              )
             ),
           ]
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.inversePrimary,
-            borderRadius: BorderRadius.circular(12)
-          ),
-          padding: const EdgeInsets.all(8),
-          child: Row(
-            children: [
-              Checkbox(
-                value: task.completed,
-                onChanged: onChange,
-                activeColor: Theme.of(context).colorScheme.inverseSurface
-              ),
-              Text(
-                task.name,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  decoration: task.completed ? TextDecoration.lineThrough : TextDecoration.none
-                )
-              ),
-            ]
-          ),
         ),
       ),
     );
